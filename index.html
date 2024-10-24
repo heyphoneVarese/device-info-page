@@ -1,36 +1,21 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>获取设备信息</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Device Info</title>
+  <script src="https://cdn.jsdelivr.net/npm/wurfl.js"></script> <!-- 引入WURFL.js -->
 </head>
 <body>
-  <h1>您的设备信息</h1>
+  <h1>Your Device Information</h1>
   <p id="device-info"></p >
 
   <script>
-    function getRendererInfo() {
-      const canvas = document.createElement('canvas');
-      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-      if (!gl) {
-        return null;
-      }
-      const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-      if (debugInfo) {
-        const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
-        return renderer;
-      }
-      return null;
-    }
-
-    const rendererInfo = getRendererInfo();
-    let deviceInfo = '无法获取设备具体型号';
-
-    if (rendererInfo) {
-      deviceInfo = `GPU 渲染器信息：${rendererInfo}`;
-    }
-
-    document.getElementById('device-info').innerHTML = deviceInfo + '<br>User Agent: ' + navigator.userAgent;
+    // 使用WURFL.js来获取详细设备信息
+    window.onload = function() {
+      const deviceInfo = `Device: ${WURFL.complete_device_name}`;
+      document.getElementById("device-info").innerHTML = deviceInfo + "<br>User Agent: " + navigator.userAgent;
+    };
   </script>
 </body>
 </html>
