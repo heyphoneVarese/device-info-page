@@ -1,60 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Device Info</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/0.7.28/ua-parser.min.js"></script>
+  <title>获取设备信息</title>
 </head>
 <body>
-  <h1>Your Device Information</h1>
+  <h1>您的设备信息</h1>
   <p id="device-info"></p >
 
   <script>
-    // 使用 UAParser.js 来解析用户代理
-    const parser = new UAParser();
-    const result = parser.getResult();
-
-    let deviceInfo = 'Unknown Device';
-
-    // 解析设备型号
-    if (result.device.vendor && result.device.model) {
-      deviceInfo = `Device: ${result.device.vendor} ${result.device.model}`;
-    } else {
-      const userAgent = navigator.userAgent.toLowerCase();
-      if (userAgent.includes('iphone')) {
-        // 获取版本号
-        const versionMatch = userAgent.match(/iphone os (\d+_\d+_\d+)/);
-        if (versionMatch) {
-          deviceInfo = `Device: Apple iPhone (iOS: ${versionMatch[1].replace(/_/g, '.')})`;
-        } else {
-          deviceInfo = `Device: Apple iPhone`;
-        }
-      } else if (userAgent.includes('samsung')) {
-        const match = userAgent.match(/samsung; ([\w\s-]+)/);
-        if (match) {
-          deviceInfo = `Device: Samsung Galaxy ${match[1]}`;
-        } else {
-          deviceInfo = `Device: Samsung (型号不明确)`;
-        }
-      } else if (userAgent.includes('xiaomi')) {
-        const match = userAgent.match(/xiaomi\/([\w\s-]+)/);
-        if (match) {
-          deviceInfo = `Device: Xiaomi ${match[1]}`;
-        } else {
-          deviceInfo = `Device: Xiaomi (型号不明确)`;
-        }
-      } else {
-        deviceInfo = `Device: Mobile Device (型号不明确)`;
+    function getRendererInfo() {
+      const canvas = document.createElement('canvas');
+      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      if (!gl) {
+        return null;
       }
+      const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+      if (debugInfo) {
+        const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+        return renderer;
+      }
+      return null;
     }
 
-    // 显示操作系统信息
-    if (result.os.name) {
-      deviceInfo += `<br>Operating System: ${result.os.name} ${result.os.version}`;
+    const rendererInfo = getRendererInfo();
+    let deviceInfo = '无法获取设备具体型号';
+
+    if (rendererInfo) {
+      deviceInfo = `GPU 渲染器信息：${rendererInfo}`;
     }
 
-    document.getElementById("device-info").innerHTML = deviceInfo + "<br>User Agent: " + navigator.userAgent;
+    document.getElementById('device-info').innerHTML = deviceInfo + '<br>User Agent: ' + navigator.userAgent;
   </script>
 </body>
 </html>
