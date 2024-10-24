@@ -4,18 +4,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Device Info</title>
-  <script src="https://cdn.jsdelivr.net/npm/wurfl.js"></script> <!-- 引入WURFL.js -->
 </head>
 <body>
   <h1>Your Device Information</h1>
-  <p id="device-info"></p >
+  <p id="device-info">Fetching device info...</p >
 
   <script>
-    // 使用WURFL.js来获取详细设备信息
-    window.onload = function() {
-      const deviceInfo = `Device: ${WURFL.complete_device_name}`;
-      document.getElementById("device-info").innerHTML = deviceInfo + "<br>User Agent: " + navigator.userAgent;
-    };
+    // 获取用户的User Agent
+    const userAgent = navigator.userAgent;
+
+    // 发送User Agent到服务器进行设备解析
+    fetch('/get-device-info', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ userAgent: userAgent })
+    })
+    .then(response => response.json())
+    .then(data => {
+      // 将服务器返回的设备信息显示在页面上
+      document.getElementById("device-info").innerHTML = "Device: " + data.deviceInfo;
+    })
+    .catch(error => {
+      document.getElementById("device-info").innerHTML = "Error fetching device info.";
+    });
   </script>
 </body>
 </html>
