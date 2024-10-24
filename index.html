@@ -33,8 +33,9 @@
             return device;
         }
 
-        // 在页面上显示设备信息
-        document.getElementById('device-info').innerText = getDeviceInfo() + " - " + userAgent;
+        // 在页面上显示设备信息和用户代理
+        var deviceInfo = getDeviceInfo();
+        document.getElementById('device-info').innerText = "Device: " + deviceInfo + "\nUser Agent: " + userAgent;
     </script>
 </body>
 </html>
