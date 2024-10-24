@@ -11,18 +11,34 @@
   <p id="device-info"></p >
 
   <script>
-    // 使用UAParser.js来解析用户代理
+    // 使用 UAParser.js 来解析用户代理
     const parser = new UAParser();
     const result = parser.getResult();
 
     let deviceInfo = 'Unknown Device';
 
+    // 获取设备型号
     if (result.device.vendor && result.device.model) {
       deviceInfo = `Device: ${result.device.vendor} ${result.device.model}`;
-    } else if (result.os.name) {
-      deviceInfo = `Device: ${result.os.name}`;
-    } else {
-      deviceInfo = 'Device: Unknown';
+    } else if (result.device.type === 'mobile') {
+      // 针对移动设备的额外处理
+      const userAgent = navigator.userAgent.toLowerCase();
+      if (userAgent.includes('iphone')) {
+        deviceInfo = `Device: Apple iPhone (型号不明确)`;
+      } else if (userAgent.includes('samsung')) {
+        deviceInfo = `Device: Samsung (型号不明确)`;
+      } else if (userAgent.includes('xiaomi')) {
+        deviceInfo = `Device: Xiaomi (型号不明确)`;
+      } else {
+        deviceInfo = `Device: Mobile Device (型号不明确)`;
+      }
+    } else if (result.device.vendor) {
+      deviceInfo = `Device: ${result.device.vendor} (Desktop)`;
+    }
+
+    // 显示操作系统信息
+    if (result.os.name) {
+      deviceInfo += `<br>Operating System: ${result.os.name} ${result.os.version}`;
     }
 
     document.getElementById("device-info").innerHTML = deviceInfo + "<br>User Agent: " + navigator.userAgent;
