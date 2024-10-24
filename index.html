@@ -17,23 +17,35 @@
 
     let deviceInfo = 'Unknown Device';
 
-    // 获取设备型号
+    // 解析设备型号
     if (result.device.vendor && result.device.model) {
       deviceInfo = `Device: ${result.device.vendor} ${result.device.model}`;
-    } else if (result.device.type === 'mobile') {
-      // 针对移动设备的额外处理
+    } else {
       const userAgent = navigator.userAgent.toLowerCase();
       if (userAgent.includes('iphone')) {
-        deviceInfo = `Device: Apple iPhone (型号不明确)`;
+        const match = userAgent.match(/iphone os (\d+_\d+_\d+)/);
+        if (match) {
+          deviceInfo = `Device: Apple iPhone (版本: ${match[1].replace(/_/g, '.')})`;
+        } else {
+          deviceInfo = `Device: Apple iPhone`;
+        }
       } else if (userAgent.includes('samsung')) {
-        deviceInfo = `Device: Samsung (型号不明确)`;
+        const match = userAgent.match(/samsung; ([\w\s-]+)/);
+        if (match) {
+          deviceInfo = `Device: Samsung Galaxy ${match[1]}`;
+        } else {
+          deviceInfo = `Device: Samsung (型号不明确)`;
+        }
       } else if (userAgent.includes('xiaomi')) {
-        deviceInfo = `Device: Xiaomi (型号不明确)`;
+        const match = userAgent.match(/xiaomi\/([\w\s-]+)/);
+        if (match) {
+          deviceInfo = `Device: Xiaomi ${match[1]}`;
+        } else {
+          deviceInfo = `Device: Xiaomi (型号不明确)`;
+        }
       } else {
         deviceInfo = `Device: Mobile Device (型号不明确)`;
       }
-    } else if (result.device.vendor) {
-      deviceInfo = `Device: ${result.device.vendor} (Desktop)`;
     }
 
     // 显示操作系统信息
