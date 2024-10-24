@@ -16,19 +16,19 @@
         function getDeviceInfo() {
             let device = "Unknown Device";
 
-            if (/Android/.test(userAgent)) {
+            if (/Android/i.test(userAgent)) {
                 device = "Android Device";
-            } else if (/iPhone/.test(userAgent)) {
+            } else if (/iPhone/i.test(userAgent)) {
                 device = "iPhone";
-            } else if (/iPad/.test(userAgent)) {
+            } else if (/iPad/i.test(userAgent)) {
                 device = "iPad";
-            } else if (/Macintosh/.test(userAgent)) {
+            } else if (/Macintosh/i.test(userAgent)) {
                 device = "Mac";
-            } else if (/Windows/.test(userAgent)) {
+            } else if (/Windows/i.test(userAgent)) {
                 device = "Windows PC";
-            } else if (/Linux/.test(userAgent)) {
+            } else if (/Linux/i.test(userAgent)) {
                 device = "Linux Device";
-            } else if (/CrOS/.test(userAgent)) {
+            } else if (/CrOS/i.test(userAgent)) {
                 device = "Chrome OS Device";
             }
 
