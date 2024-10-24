@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Device Info</title>
-    <script src="https://cdn.jsdelivr.net/npm/device-detector-js/dist/device-detector.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Device Info</title>
+  <script src="https://cdn.jsdelivr.net/npm/device-detector-js/dist/device-detector.js"></script>
 </head>
 <body>
-    <h1>Your Device Information</h1>
-    <p id="device-info"></p >
+  <h1>Your Device Information</h1>
+  <p id="device-info"></p >
 
-    <script>
-        // 创建 DeviceDetector 实例
-        const deviceDetector = new DeviceDetector();
-        const userAgent = navigator.userAgent;
-        const device = deviceDetector.parse(userAgent);
+  <script>
+    // 创建 DeviceDetector 实例
+    const deviceDetector = new DeviceDetector();
+    const userAgent = navigator.userAgent;
+    const device = deviceDetector.parse(userAgent);
 
-        // 显示设备信息
-        document.getElementById("device-info").innerHTML =
-            "Device: " + device.device.model + "<br>" +
-            "Brand: " + device.device.brand + "<br>" +
-            "Type: " + device.device.type + "<br>" +
-            "User Agent: " + userAgent;
-    </script>
+    // 显示设备信息
+    document.getElementById("device-info").innerHTML = 
+      "Device: " + device.device.model + "<br>" + 
+      "Brand: " + device.device.brand + "<br>" + 
+      "Type: " + device.device.type + "<br>" + 
+      "User Agent: " + userAgent;
+  </script>
 </body>
 </html>
