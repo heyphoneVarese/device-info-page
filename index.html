@@ -4,28 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Device Info</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/0.7.28/ua-parser.min.js"></script>
 </head>
 <body>
   <h1>Your Device Information</h1>
   <p id="device-info"></p >
 
   <script>
-    // 简单解析User Agent
-    const userAgent = navigator.userAgent.toLowerCase();
+    // 使用UAParser.js来解析用户代理
+    const parser = new UAParser();
+    const result = parser.getResult();
+
     let deviceInfo = 'Unknown Device';
 
-    if (userAgent.includes('iphone')) {
-      deviceInfo = 'Device: iPhone';
-    } else if (userAgent.includes('ipad')) {
-      deviceInfo = 'Device: iPad';
-    } else if (userAgent.includes('android')) {
-      deviceInfo = 'Device: Android';
-    } else if (userAgent.includes('macintosh')) {
-      deviceInfo = 'Device: Mac';
-    } else if (userAgent.includes('windows')) {
-      deviceInfo = 'Device: Windows PC';
-    } else if (userAgent.includes('linux')) {
-      deviceInfo = 'Device: Linux';
+    if (result.device.vendor && result.device.model) {
+      deviceInfo = `Device: ${result.device.vendor} ${result.device.model}`;
+    } else if (result.os.name) {
+      deviceInfo = `Device: ${result.os.name}`;
+    } else {
+      deviceInfo = 'Device: Unknown';
     }
 
     document.getElementById("device-info").innerHTML = deviceInfo + "<br>User Agent: " + navigator.userAgent;
