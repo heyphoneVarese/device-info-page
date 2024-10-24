@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Device Info</title>
 </head>
 <body>
@@ -10,24 +9,9 @@
     <p id="device-info"></p >
 
     <script>
+        // 获取用户代理字符串并显示在页面上
         var userAgent = navigator.userAgent;
-
-        function getDeviceInfo() {
-            let device = "Unknown Device";
-            if (/Android/.test(userAgent)) {
-                let androidMatch = userAgent.match(/Android\\s([0-9\\.]+)/);
-                device = `Android Device, Version: ${androidMatch ? androidMatch[1] : 'Unknown'}`;
-            } else if (/iPhone/.test(userAgent)) {
-                device = "iPhone";
-            } else if (/iPad/.test(userAgent)) {
-                device = "iPad";
-            } else if (/Windows Phone/.test(userAgent)) {
-                device = "Windows Phone";
-            }
-            return device;
-        }
-
-        document.getElementById('device-info').innerText = getDeviceInfo();
+        document.getElementById('device-info').innerText = userAgent;
     </script>
 </body>
 </html>
