@@ -4,24 +4,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Device Info</title>
-  <script src="https://cdn.jsdelivr.net/npm/device-detector-js/dist/device-detector.js"></script>
 </head>
 <body>
   <h1>Your Device Information</h1>
   <p id="device-info"></p >
 
   <script>
-    // 创建 DeviceDetector 实例
-    const deviceDetector = new DeviceDetector();
-    const userAgent = navigator.userAgent;
-    const device = deviceDetector.parse(userAgent);
+    // 简单解析User Agent
+    const userAgent = navigator.userAgent.toLowerCase();
+    let deviceInfo = 'Unknown Device';
 
-    // 显示设备信息
-    document.getElementById("device-info").innerHTML = 
-      "Device: " + device.device.model + "<br>" + 
-      "Brand: " + device.device.brand + "<br>" + 
-      "Type: " + device.device.type + "<br>" + 
-      "User Agent: " + userAgent;
+    if (userAgent.includes('iphone')) {
+      deviceInfo = 'Device: iPhone';
+    } else if (userAgent.includes('ipad')) {
+      deviceInfo = 'Device: iPad';
+    } else if (userAgent.includes('android')) {
+      deviceInfo = 'Device: Android';
+    } else if (userAgent.includes('macintosh')) {
+      deviceInfo = 'Device: Mac';
+    } else if (userAgent.includes('windows')) {
+      deviceInfo = 'Device: Windows PC';
+    } else if (userAgent.includes('linux')) {
+      deviceInfo = 'Device: Linux';
+    }
+
+    document.getElementById("device-info").innerHTML = deviceInfo + "<br>User Agent: " + navigator.userAgent;
   </script>
 </body>
 </html>
