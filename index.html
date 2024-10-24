@@ -23,9 +23,10 @@
     } else {
       const userAgent = navigator.userAgent.toLowerCase();
       if (userAgent.includes('iphone')) {
-        const match = userAgent.match(/iphone os (\d+_\d+_\d+)/);
-        if (match) {
-          deviceInfo = `Device: Apple iPhone (版本: ${match[1].replace(/_/g, '.')})`;
+        // 获取版本号
+        const versionMatch = userAgent.match(/iphone os (\d+_\d+_\d+)/);
+        if (versionMatch) {
+          deviceInfo = `Device: Apple iPhone (iOS: ${versionMatch[1].replace(/_/g, '.')})`;
         } else {
           deviceInfo = `Device: Apple iPhone`;
         }
