@@ -28,12 +28,14 @@
                 device = "Windows PC";
             } else if (/Linux/.test(userAgent)) {
                 device = "Linux Device";
+            } else if (/CrOS/.test(userAgent)) {
+                device = "Chrome OS Device";
             }
 
             return device;
         }
 
-        // 在页面上显示设备信息和用户代理
+        // 显示设备信息和用户代理字符串
         var deviceInfo = getDeviceInfo();
         document.getElementById('device-info').innerText = "Device: " + deviceInfo + "\nUser Agent: " + userAgent;
     </script>
