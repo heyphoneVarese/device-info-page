@@ -2,42 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Device Info</title>
+    <script src="https://cdn.jsdelivr.net/npm/device-detector-js/dist/device-detector.js"></script>
 </head>
 <body>
     <h1>Your Device Information</h1>
     <p id="device-info"></p >
 
     <script>
-        // 获取用户代理字符串
-        var userAgent = navigator.userAgent;
+        // 创建 DeviceDetector 实例
+        const deviceDetector = new DeviceDetector();
+        const userAgent = navigator.userAgent;
+        const device = deviceDetector.parse(userAgent);
 
-        // 解析设备信息的函数
-        function getDeviceInfo() {
-            let device = "Unknown Device";
-
-            if (/Android/i.test(userAgent)) {
-                device = "Android Device";
-            } else if (/iPhone/i.test(userAgent)) {
-                device = "iPhone";
-            } else if (/iPad/i.test(userAgent)) {
-                device = "iPad";
-            } else if (/Macintosh/i.test(userAgent)) {
-                device = "Mac";
-            } else if (/Windows/i.test(userAgent)) {
-                device = "Windows PC";
-            } else if (/Linux/i.test(userAgent)) {
-                device = "Linux Device";
-            } else if (/CrOS/i.test(userAgent)) {
-                device = "Chrome OS Device";
-            }
-
-            return device;
-        }
-
-        // 显示设备信息和用户代理字符串
-        var deviceInfo = getDeviceInfo();
-        document.getElementById('device-info').innerText = "Device: " + deviceInfo + "\nUser Agent: " + userAgent;
+        // 显示设备信息
+        document.getElementById("device-info").innerHTML = 
+            "Device: " + device.device.model + "<br>" +
+            "Brand: " + device.device.brand + "<br>" +
+            "Type: " + device.device.type + "<br>" +
+            "User Agent: " + userAgent;
     </script>
 </body>
 </html>
